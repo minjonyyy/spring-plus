@@ -41,7 +41,7 @@ public class JwtUtil {
                 Jwts.builder()
                         .setSubject(String.valueOf(userId))
                         .claim("email", email)
-                        .claim("userRole", userRole)
+                        .claim("userRole", userRole.getUserRole())
                         .claim("nickname", nickname) //토큰 정보에 닉네임 추가
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME))
                         .setIssuedAt(date) // 발급일
