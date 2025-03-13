@@ -42,8 +42,12 @@ public class TodoService {
                 todoSaveRequest.getTitle(),
                 todoSaveRequest.getContents(),
                 weather,
-                user
+                user,
+                1,
+                0
         );
+        // 할 일 생성 시 기본 담당자 수 = 1, 기본 댓글 수 = 0 으로 고정
+
         Todo savedTodo = todoRepository.save(newTodo);
 
         return new TodoSaveResponse(
