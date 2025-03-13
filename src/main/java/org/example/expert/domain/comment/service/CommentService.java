@@ -40,6 +40,8 @@ public class CommentService {
 
         Comment savedComment = commentRepository.save(newComment);
 
+        todo.addComment(1);
+
         return new CommentSaveResponse(
                 savedComment.getId(),
                 savedComment.getContents(),
