@@ -3,10 +3,13 @@ package org.example.expert.domain.manager.service;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
+import org.example.expert.domain.log.LogService;
 import org.example.expert.domain.manager.dto.request.ManagerSaveRequest;
 import org.example.expert.domain.manager.dto.response.ManagerResponse;
 import org.example.expert.domain.manager.dto.response.ManagerSaveResponse;
+import org.example.expert.domain.log.Log;
 import org.example.expert.domain.manager.entity.Manager;
+import org.example.expert.domain.manager.repository.LogRepository;
 import org.example.expert.domain.manager.repository.ManagerRepository;
 import org.example.expert.domain.todo.entity.Todo;
 import org.example.expert.domain.todo.repository.TodoRepository;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +32,8 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
+    private final LogRepository logRepository;
+    private final LogService logService;
 
     @Transactional
     public ManagerSaveResponse saveManager(AuthUser authUser, long todoId, ManagerSaveRequest managerSaveRequest) {
@@ -95,4 +101,25 @@ public class ManagerService {
 
         managerRepository.delete(manager);
     }
+
+    @Transactional
+    public void sendApplyManager(AuthUser authUser, long todoId) {
+        User user = User.fromAuthUser(authUser);
+
+        Todo todo = todoRepository.findById(todoId)
+                .orElseThrow(() -> new InvalidRequestException("Todo not found"));
+
+        logService.saveLog(new Log(user, todo, LocalDateTime.now()));
+
+        if(managerRepository.existsByUserIdAndTodoId(user.getId(), todo.getId())){
+            throw new InvalidRequestException("이미 매니저로 등록되어 있습니다.");
+        }
+
+//        throw new RuntimeException("*** 에러 발생 ***"); //에러 발생해도 log가 찍히는지 테스트
+
+        // 프록시 때문
+        // 같은 서비스에 있는 트랜잭션을 중첩을 시켜버림 - 서비스 레이어 분리하여
+
+    }
+
 }
