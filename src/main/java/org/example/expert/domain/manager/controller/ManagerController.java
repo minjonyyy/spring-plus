@@ -45,4 +45,18 @@ public class ManagerController {
     ) {
         managerService.deleteManager(authUser, todoId, managerId);
     }
+
+    // 매니저 등록 요청 api
+    @PostMapping("/todos/{todoId}/managers/apply")
+
+    public void applyManager(
+            @AuthenticationPrincipal AuthUser authUser,
+            @PathVariable long todoId
+    ){
+        managerService.sendApplyManager(authUser, todoId);
+    }
+
+//    managers/apply
+//    -> requestbody로 todoId입력
+
 }
