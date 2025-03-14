@@ -8,6 +8,7 @@ import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
+import org.example.expert.domain.todo.dto.response.TodoSearchResponse;
 import org.example.expert.domain.todo.entity.Todo;
 import org.example.expert.domain.todo.repository.TodoQueryRepositoryImpl;
 import org.example.expert.domain.todo.repository.TodoRepository;
@@ -90,5 +91,23 @@ public class TodoService {
                 todo.getCreatedAt(),
                 todo.getModifiedAt()
         );
+    }
+
+    public Page<TodoSearchResponse> getTodosWithSearch(int page, int size, String title, String nickname, LocalDateTime startDate, LocalDateTime endDate) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+
+        Page<TodoSearchResponse> todos = todoRepository.searchTodo(pageable, title, nickname, startDate, endDate);
+
+
+        return todos.map(todo -> new TodoSearchResponse(
+                todo.getId(),
+                todo.getTitle(),
+                new UserResponse(todo.getUser().getId(), todo.getUser().getEmail()),
+                todo.getNumOfManagers(),
+                todo.getNumOfComments(),
+                todo.getCreatedAt()
+        ));
+
+
     }
 }
