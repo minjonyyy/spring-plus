@@ -23,6 +23,8 @@ public class User extends Timestamped {
 
     private String nickname;
 
+    private String imageUrl;
+
     public User(String email, String password, UserRole userRole, String nickname) {
         this.email = email;
         this.password = password;
@@ -46,5 +48,9 @@ public class User extends Timestamped {
 
     public void updateRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

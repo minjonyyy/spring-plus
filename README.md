@@ -1,6 +1,6 @@
 # SPRING PLUS
 
-### 12-1.
+### 12-1. ec2 연결
 
 ![인스턴스](https://github.com/user-attachments/assets/9afef8fb-515f-4bb6-ad66-fd394f89172b)
 
@@ -11,7 +11,12 @@
 
 ![image (1)](https://github.com/user-attachments/assets/43b21a50-2244-48f7-81ac-1ca2937905b2)
 
-### 12-2.
+### 12-2. RDS 데이터베이스 연결
 
 ![image (2)](https://github.com/user-attachments/assets/81d12e68-c096-42c9-97b3-0cf948aaeed5)
 ![image (3)](https://github.com/user-attachments/assets/dc9fb50c-3cc7-468e-9834-16d2ccef88ca)
+
+### 12-3. 이미지 업로드
+
+![image (4)](https://github.com/user-attachments/assets/270d7063-9299-4008-a14e-d1577ae09fdf)
+![image (5)](https://github.com/user-attachments/assets/1ba0af0a-57c7-420b-bf23-78dbb879b55a)

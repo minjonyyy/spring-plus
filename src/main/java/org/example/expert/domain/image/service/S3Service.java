@@ -25,11 +25,11 @@ public class S3Service {
     private String bucket;
 
 
-    public String uploadImage(AuthUser authUser, MultipartFile image) {
+    public String uploadImage(MultipartFile image) {
 
-        User user = User.fromAuthUser(authUser);
+        long currenTime = System.currentTimeMillis();
 
-        String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
+        String fileName = currenTime + "_" + image.getOriginalFilename();
 
         try{
             // 메타데이터 설정
