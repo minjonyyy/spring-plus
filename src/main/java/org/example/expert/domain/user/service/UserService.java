@@ -6,10 +6,12 @@ import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.image.service.S3Service;
 import org.example.expert.domain.user.dto.request.UserChangePasswordRequest;
+import org.example.expert.domain.user.dto.response.UserListResponse;
 import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +31,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private final AmazonS3 amazonS3;
+
     private final S3Service s3Service;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+
 
     public UserResponse getUser(long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new InvalidRequestException("User not found"));
@@ -80,4 +83,12 @@ public class UserService {
 
     }
 
+    public List<UserListResponse> getUsers(String nickname) {
+
+        List<User> users = userRepository.findByNickname(nickname);
+
+        return users.stream()
+                .map(user -> new UserListResponse(user.getId(), user.getEmail(), user.getNickname()))
+                .collect(Collectors.toList());
+    }
 }

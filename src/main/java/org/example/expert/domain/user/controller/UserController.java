@@ -3,6 +3,7 @@ package org.example.expert.domain.user.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.user.dto.request.UserChangePasswordRequest;
+import org.example.expert.domain.user.dto.response.UserListResponse;
 import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.enums.UserRole;
 import org.example.expert.domain.user.service.UserService;
@@ -12,6 +13,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,6 +47,14 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
+    }
+
+
+    @GetMapping("/users")
+    public ResponseEntity<List<UserListResponse>> getUserWithNickname(
+            @RequestParam(required = false) String nickname
+    ) {
+        return ResponseEntity.ok(userService.getUsers(nickname));
     }
 
 }
