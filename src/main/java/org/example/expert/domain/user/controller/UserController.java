@@ -30,10 +30,11 @@ public class UserController {
         userService.changePassword(authUser.getId(), userChangePasswordRequest);
     }
 
+    // 프로필 이미지 업로드 API
     @PostMapping("/users/{userId}/profile-image")
     public ResponseEntity<String> uploadImage(
             @AuthenticationPrincipal AuthUser authUser,
-            @RequestPart("file") MultipartFile file,
+            @RequestPart("file") MultipartFile file, // spring에서 제공하는 MultipartFile 인터페이스 사용 - 큰 파일을 청크 단위로 쪼개어 효율적으로 파일 업로드
             @PathVariable long userId) {
 
         try {

@@ -64,6 +64,7 @@ public class UserService {
         }
     }
 
+    // 이미지 업로드
     @Transactional
     public void uploadImage(long userId, AuthUser authUser, MultipartFile image) {
 
@@ -71,12 +72,12 @@ public class UserService {
                 .orElseThrow(() -> new InvalidRequestException("User not found"));
 
         if(!Objects.equals(user.getId(), authUser.getId())){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인만 접근할 수 있습니다.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인만 접근할 수 있습니다."); //본인 프로필에만 접근 가능
         }
 
         String imageUrl = s3Service.uploadImage(image);
 
-        user.updateImageUrl(imageUrl);
+        user.updateImageUrl(imageUrl); // 업로드한 이미지로 user 테이블의 ImageUrl 업데이트
 
     }
 

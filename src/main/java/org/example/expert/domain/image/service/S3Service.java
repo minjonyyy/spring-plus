@@ -29,7 +29,7 @@ public class S3Service {
 
         long currenTime = System.currentTimeMillis();
 
-        String fileName = currenTime + "_" + image.getOriginalFilename();
+        String fileName = currenTime + "_" + image.getOriginalFilename(); //현재 시간을 반영한 이미지 파일 이름
 
         try{
             // 메타데이터 설정
@@ -49,7 +49,7 @@ public class S3Service {
         return getPublicUrl(fileName);
     }
 
-    private String getPublicUrl(String fileName) {
+    private String getPublicUrl(String fileName) { // 이미지 url 생성 메서드
         return String.format("https://%s.s3.%s.amazonaws.com/%s", bucket, amazonS3.getRegionName(), fileName);
     }
 }
