@@ -35,16 +35,17 @@ public class createUsers {
 
             users.add(new User( "email" + i + "@example.com", "password" + i, userRole, "nickname" + i));
 
-//            try{
-//                Thread.sleep(300);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
 
             // 1000개씩 저장 (Batch Insert)
             if (users.size() % 1000 == 0) {
                 userRepository.saveAll(users);
                 users.clear(); // 저장 후 리스트 초기화
+
+                try{
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
         }
