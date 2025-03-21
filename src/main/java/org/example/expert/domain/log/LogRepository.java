@@ -1,6 +1,5 @@
-package org.example.expert.domain.manager.repository;
+package org.example.expert.domain.log;
 
-import org.example.expert.domain.log.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LogRepository extends JpaRepository<Log, Long> {

@@ -2,7 +2,6 @@ package org.example.expert.domain.log;
 
 
 import lombok.RequiredArgsConstructor;
-import org.example.expert.domain.manager.repository.LogRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
